@@ -41,6 +41,19 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<!-- Configuração para google_sign-in -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+				<string>com.googleusercontent.apps.274496835351-u9a14svlh2dhrf20f354tipolu5bvtb7</string>
+			</array>
+		</dict>
+	</array>
 	<!-- Configuração para login no facebook -->
 	<key>CFBundleURLTypes</key>
 	<array>
