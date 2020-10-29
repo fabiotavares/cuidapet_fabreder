@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "274496835351",
+    "firebase_url": "https://cuidapet-fabreder.firebaseio.com",
+    "project_id": "cuidapet-fabreder",
+    "storage_bucket": "cuidapet-fabreder.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274496835351:android:7c31c5098892cc3d3ab152",
+        "android_client_info": {
+          "package_name": "com.fabreder.cuidapet_fabreder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274496835351-5aulud8jep8jldtksgss1v8092m5ml5f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fabreder.cuidapet_fabreder",
+            "certificate_hash": "5e2307c93f3287d568e4bd13af6fc5934009d906"
+          }
+        },
+        {
+          "client_id": "274496835351-bjpgaqo6sv17m594ad6uut98qso6arnv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3Dlk2u9dXnH-y7XQgD-e6zFqwjmKr4KQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274496835351-bjpgaqo6sv17m594ad6uut98qso6arnv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

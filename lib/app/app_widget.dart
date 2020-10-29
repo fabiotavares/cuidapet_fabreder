@@ -8,7 +8,8 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       navigatorKey: Modular.navigatorKey,
-      title: 'Flutter Slidy',
+      title: 'Cuidapet',
+      debugShowCheckedModeBanner: false,
       theme: ThemeCuidapet.theme(),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,

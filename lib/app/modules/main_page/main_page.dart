@@ -1,4 +1,5 @@
 import 'package:cuidapet_fabreder/app/shared/auth_store.dart';
+import 'package:cuidapet_fabreder/app/shared/theme_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,6 +25,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // inicializando o componente ScreenUtil (esse app será 100% retrato)
     ScreenUtil.init(context);
+    ThemeUtils.init(context);
 
     return Scaffold(
       body: Center(
