@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>274496835351-u9a14svlh2dhrf20f354tipolu5bvtb7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.274496835351-u9a14svlh2dhrf20f354tipolu5bvtb7</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>274496835351-5aulud8jep8jldtksgss1v8092m5ml5f.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDtsixFxsW8PQ02Q3Qkn1tJR61DZUSYSHY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>274496835351</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.fabreder.cuidapetFabreder</string>
+	<key>PROJECT_ID</key>
+	<string>cuidapet-fabreder</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cuidapet-fabreder.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:274496835351:ios:16b501f6ff5ee1523ab152</string>
+	<key>DATABASE_URL</key>
+	<string>https://cuidapet-fabreder.firebaseio.com</string>
+</dict>
+</plist>
