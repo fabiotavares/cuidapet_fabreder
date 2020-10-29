@@ -1,6 +1,8 @@
+import 'dart:io';
+
 import 'package:cuidapet_fabreder/app/shared/components/facebook_button.dart';
 import 'package:cuidapet_fabreder/app/shared/theme_utils.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -22,38 +24,45 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeUtils.primaryColor,
-      body: Container(
-        // width: ScreenUtil().screenWidth,
-        // height: ScreenUtil().screenHeight,
-        child: Stack(
-          children: [
-            Container(
-              // fundo com a imagem de backgroud
-              width: ScreenUtil().screenWidth,
-              height: ScreenUtil().screenHeight * .95,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage('lib/assets/images/login_background.png'),
-                fit: BoxFit.fill,
-              )),
-            ),
-            // logo
-            Container(
-              // descontando o tamanho da status bar
-              margin: EdgeInsets.only(top: ScreenUtil().statusBarHeight + 30),
-              width: double.infinity,
-              child: Column(
-                children: [
-                  Image.asset(
-                    'lib/assets/images/logo.png',
-                    width: ScreenUtil().setWidth(400),
-                    fit: BoxFit.fill,
-                  ),
-                  _buildForm(),
-                ],
+      body: SingleChildScrollView(
+        child: Container(
+          // width: ScreenUtil().screenWidth,
+          // height: ScreenUtil().screenHeight,
+          child: Stack(
+            children: [
+              Container(
+                // fundo com a imagem de backgroud
+                width: ScreenUtil().screenWidth,
+                height: ScreenUtil().screenHeight < 700
+                    ? ScreenUtil().screenHeight * .95 //700
+                    : ScreenUtil().screenHeight * .95,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                  image: AssetImage('lib/assets/images/login_background.png'),
+                  fit: BoxFit.fill,
+                )),
               ),
-            ),
-          ],
+              // logo
+              Container(
+                // descontando o tamanho da status bar
+                margin: EdgeInsets.only(
+                    top: Platform.isIOS
+                        ? ScreenUtil().statusBarHeight + 30
+                        : ScreenUtil().statusBarHeight),
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'lib/assets/images/logo.png',
+                      width: ScreenUtil().setWidth(400),
+                      fit: BoxFit.fill,
+                    ),
+                    _buildForm(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -109,8 +118,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                   ),
                 ),
                 onPressed: () async {
-                  // await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  //     email: 'fabreder3@gmail.com', password: '123123');
+                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: 'fabreder3@gmail.com', password: '123123');
 
                   FacebookLogin()
                       .logIn(['public_profile', 'email']).then((value) {

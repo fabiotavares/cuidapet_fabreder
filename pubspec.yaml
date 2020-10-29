@@ -33,22 +33,20 @@ environment:
 # firebase_auth: ^0.16.1
 # firebase_messaging: ^6.0.16
 # firebase_storage: ^3.1.6
-
-
 dependencies:
   flutter:
     sdk: flutter
   dio: ^3.0.10
+  firebase_auth: ^0.18.2
+  flutter_dotenv: ^2.1.0
+  flutter_facebook_login: ^3.0.0
   flutter_icons: ^1.1.0
   flutter_mobx: ^1.1.0+2
   flutter_modular: ^2.0.1
   flutter_screenutil: ^3.2.0
   get: ^3.15.0
   mobx: ^1.2.1+4
-  firebase_auth: ^0.18.1+2
-  flutter_facebook_login: ^3.0.0
-  
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -70,6 +68,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - lib/assets/images/
+    - .env
+    - .env_dev
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

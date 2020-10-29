@@ -6,13 +6,14 @@ import 'package:get/get.dart';
 class AppWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      navigatorKey: Modular.navigatorKey,
+    return MaterialApp(
+      navigatorKey: Get.addKey(Modular.navigatorKey),
       title: 'Cuidapet',
       debugShowCheckedModeBanner: false,
       theme: ThemeCuidapet.theme(),
       initialRoute: '/',
       onGenerateRoute: Modular.generateRoute,
+      navigatorObservers: [GetObserver()],
     );
   }
 }
