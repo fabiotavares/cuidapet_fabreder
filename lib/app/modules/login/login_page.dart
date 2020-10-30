@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cuidapet_fabreder/app/core/dio/custom_dio.dart';
 import 'package:cuidapet_fabreder/app/shared/components/facebook_button.dart';
 import 'package:cuidapet_fabreder/app/shared/theme_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -118,15 +119,19 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                   ),
                 ),
                 onPressed: () async {
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                      email: 'fabreder3@gmail.com', password: '123123');
+                  // await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  //     email: 'fabreder3@gmail.com', password: '123123');
 
-                  FacebookLogin()
-                      .logIn(['public_profile', 'email']).then((value) {
-                    print('Status: ${value.status}');
-                    print('Erro: ${value.errorMessage}');
-                    print('Token: ${value.accessToken}');
-                  });
+                  // FacebookLogin()
+                  //     .logIn(['public_profile', 'email']).then((value) {
+                  //   print('Status: ${value.status}');
+                  //   print('Erro: ${value.errorMessage}');
+                  //   print('Token: ${value.accessToken}');
+                  // });
+
+                  CustomDio.authInstance
+                      .get('http://viacep.com.br/ws/01001000/json/hg')
+                      .then((value) => print(value.data));
                 },
               ),
             ),
