@@ -1,3 +1,4 @@
+import 'package:cuidapet_fabreder/app/core/push_notification/push_message_configure.dart';
 import 'package:flutter/material.dart';
 import 'package:cuidapet_fabreder/app/app_module.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,8 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // carregando variáveis de ambiente
   await loadEnv();
+  // obtendo o device id e armazenando no SharedPreferences
+  PushMessageConfigure().configure();
 
   runApp(ModularApp(module: AppModule()));
 }

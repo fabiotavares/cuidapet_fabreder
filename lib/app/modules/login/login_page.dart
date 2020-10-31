@@ -4,6 +4,7 @@ import 'package:cuidapet_fabreder/app/core/dio/custom_dio.dart';
 import 'package:cuidapet_fabreder/app/shared/components/facebook_button.dart';
 import 'package:cuidapet_fabreder/app/shared/theme_utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -47,9 +48,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
               Container(
                 // descontando o tamanho da status bar
                 margin: EdgeInsets.only(
-                    top: Platform.isIOS
-                        ? ScreenUtil().statusBarHeight + 30
-                        : ScreenUtil().statusBarHeight),
+                    top: Platform.isIOS ? ScreenUtil().statusBarHeight + 30 : ScreenUtil().statusBarHeight),
                 width: double.infinity,
                 child: Column(
                   children: [
@@ -129,9 +128,14 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                   //   print('Token: ${value.accessToken}');
                   // });
 
-                  CustomDio.authInstance
-                      .get('http://viacep.com.br/ws/01001000/json/hg')
-                      .then((value) => print(value.data));
+                  // CustomDio.authInstance
+                  //     .get('http://viacep.com.br/ws/01001000/json/hg')
+                  //     .then((value) => print(value.data));
+
+                  // FirebaseMessaging _fcm = FirebaseMessaging();
+                  // // requisição necessária apenas no ios
+                  // _fcm.requestNotificationPermissions();
+                  // print(await _fcm.getToken());
                 },
               ),
             ),
