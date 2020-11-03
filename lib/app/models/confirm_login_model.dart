@@ -15,5 +15,6 @@ class ConfirmLoginModel {
   });
 
   factory ConfirmLoginModel.fromJson(Map<String, dynamic> json) => _$ConfirmLoginModelFromJson(json);
+
   Map<String, dynamic> toJson() => _$ConfirmLoginModelToJson(this);
 }

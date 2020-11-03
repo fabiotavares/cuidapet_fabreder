@@ -1,6 +1,7 @@
+import 'package:cuidapet_fabreder/app/repository/shared_prefs_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +14,17 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
+  String emailUsuario;
+
+  @override
+  void initState() {
+    super.initState();
+    SharedPrefsRepository.instance.then((value) {
+      setState(() {
+        emailUsuario = value.userData?.email;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,18 +32,19 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[
-          FlatButton(
-              onPressed: () {
-                Get.showSnackbar(GetBar(
-                  title: 'Olá',
-                  message: 'Fábio Tavares',
-                  duration: Duration(seconds: 2),
-                ));
-              },
-              child: Text('Snack Bar Fácil'))
-        ],
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(emailUsuario ?? 'Não logado'),
+            FlatButton(
+                onPressed: () async {
+                  (await SharedPreferences.getInstance()).clear();
+                  Modular.to.pushNamedAndRemoveUntil('/login', (_) => false);
+                },
+                child: Text('Logout'))
+          ],
+        ),
       ),
     );
   }

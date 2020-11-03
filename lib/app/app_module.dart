@@ -1,6 +1,8 @@
 import 'package:cuidapet_fabreder/app/modules/home/home_module.dart';
 import 'package:cuidapet_fabreder/app/modules/login/login_module.dart';
 import 'package:cuidapet_fabreder/app/modules/main_page/main_page.dart';
+import 'package:cuidapet_fabreder/app/repository/usuario_repository.dart';
+import 'package:cuidapet_fabreder/app/services/usuario_services.dart';
 
 import 'app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -11,8 +13,10 @@ import 'package:cuidapet_fabreder/app/shared/auth_store.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
-        $AppController,
+        Bind((i) => AppController()),
         Bind((i) => AuthStore()),
+        Bind((i) => UsuarioRepository()),
+        Bind((i) => UsuarioServices(i.get())),
       ];
 
   @override

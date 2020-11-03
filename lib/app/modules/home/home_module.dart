@@ -6,7 +6,7 @@ import 'home_page.dart';
 class HomeModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        $HomeController,
+        Bind((i) => HomeController()),
       ];
 
   @override

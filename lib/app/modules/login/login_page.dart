@@ -1,13 +1,10 @@
 import 'dart:io';
 
-import 'package:cuidapet_fabreder/app/core/dio/custom_dio.dart';
 import 'package:cuidapet_fabreder/app/shared/components/facebook_button.dart';
 import 'package:cuidapet_fabreder/app/shared/theme_utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'login_controller.dart';
@@ -47,8 +44,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
               // logo
               Container(
                 // descontando o tamanho da status bar
-                margin: EdgeInsets.only(
-                    top: Platform.isIOS ? ScreenUtil().statusBarHeight + 30 : ScreenUtil().statusBarHeight),
+                margin: EdgeInsets.only(top: Platform.isIOS ? ScreenUtil().statusBarHeight + 30 : ScreenUtil().statusBarHeight),
                 width: double.infinity,
                 child: Column(
                   children: [
@@ -72,10 +68,12 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Form(
+        key: controller.formKey,
         child: Column(
           children: [
             // login...
             TextFormField(
+              controller: controller.loginController,
               decoration: InputDecoration(
                 labelText: 'Login',
                 labelStyle: TextStyle(fontSize: 15),
@@ -84,21 +82,43 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                   gapPadding: 0, // estaço na borda
                 ),
               ),
+              validator: (value) {
+                if (value.trim().isEmpty) {
+                  return 'Login obrigatório';
+                }
+                return null;
+              },
             ),
             SizedBox(
               height: 20,
             ),
             // senha...
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Senha',
-                labelStyle: TextStyle(fontSize: 15),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(50),
-                  gapPadding: 0, // estaço na borda
+            Observer(builder: (_) {
+              return TextFormField(
+                controller: controller.senhaController,
+                obscureText: controller.ocultaSenha,
+                decoration: InputDecoration(
+                  labelText: 'Senha',
+                  labelStyle: TextStyle(fontSize: 15),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    gapPadding: 0, // estaço na borda
+                  ),
+                  suffixIcon: IconButton(
+                    icon: controller.ocultaSenha ? Icon(Icons.lock) : Icon(Icons.lock_open),
+                    onPressed: () => controller.toggleOcultaSenha(),
+                  ),
                 ),
-              ),
-            ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Senha obrigatória';
+                  } else if (value.length < 6) {
+                    return 'Senha precisa ter pelo menos 6 caracteres';
+                  }
+                  return null;
+                },
+              );
+            }),
             // botão entrar... pra esticar preciso usá-lo em um container
             Container(
               width: double.infinity,
@@ -117,26 +137,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                     fontSize: 20,
                   ),
                 ),
-                onPressed: () async {
-                  // await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                  //     email: 'fabreder3@gmail.com', password: '123123');
-
-                  // FacebookLogin()
-                  //     .logIn(['public_profile', 'email']).then((value) {
-                  //   print('Status: ${value.status}');
-                  //   print('Erro: ${value.errorMessage}');
-                  //   print('Token: ${value.accessToken}');
-                  // });
-
-                  // CustomDio.authInstance
-                  //     .get('http://viacep.com.br/ws/01001000/json/hg')
-                  //     .then((value) => print(value.data));
-
-                  // FirebaseMessaging _fcm = FirebaseMessaging();
-                  // // requisição necessária apenas no ios
-                  // _fcm.requestNotificationPermissions();
-                  // print(await _fcm.getToken());
-                },
+                onPressed: controller.login,
               ),
             ),
             // separador...
@@ -171,7 +172,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                 ],
               ),
             ),
-            FacebookButton(),
+            FacebookButton(onTap: () => controller.facebookLogin()),
             FlatButton(
               onPressed: () {},
               child: Text('Cadastre-se'),

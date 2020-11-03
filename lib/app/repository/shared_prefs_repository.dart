@@ -1,10 +1,14 @@
 // usando o plugin Shered Preferences para armazenar dados não criptografados
+import 'dart:convert';
+
+import 'package:cuidapet_fabreder/app/models/usuario_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // singleton
 class SharedPrefsRepository {
   static const _ACCESS_TOKEN = '/_ACCESS_TOKEN/';
   static const _DEVICE_ID = '/_DEVICE_ID/';
+  static const _USER_DATA = '/_USER_DATA/';
 
   static SharedPreferences prefs;
   static SharedPrefsRepository _instanceRepository;
@@ -30,4 +34,17 @@ class SharedPrefsRepository {
   }
 
   String get deviceId => prefs.get(_DEVICE_ID);
+
+  // acesso ao dados do usuário
+  Future<void> registerUserData(UsuarioModel user) async {
+    await prefs.setString(_USER_DATA, jsonEncode(user));
+  }
+
+  UsuarioModel get userData {
+    if (prefs.containsKey(_USER_DATA)) {
+      Map<String, dynamic> usuarioMapa = jsonDecode(prefs.getString(_USER_DATA));
+      return UsuarioModel.fromJson(usuarioMapa);
+    }
+    return null;
+  }
 }

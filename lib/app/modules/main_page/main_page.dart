@@ -23,7 +23,7 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // inicializando o componente ScreenUtil (esse app será 100% retrato)
+    // inicializando o componente ScreenUtil
     ScreenUtil.init(context);
     ThemeUtils.init(context);
 

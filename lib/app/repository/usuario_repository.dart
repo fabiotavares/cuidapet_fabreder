@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:cuidapet_fabreder/app/core/dio/custom_dio.dart';
 import 'package:cuidapet_fabreder/app/models/access_token_model.dart';
 import 'package:cuidapet_fabreder/app/models/confirm_login_model.dart';
+import 'package:cuidapet_fabreder/app/models/usuario_model.dart';
 import 'package:cuidapet_fabreder/app/repository/shared_prefs_repository.dart';
 
 class UsuarioRepository {
-  Future<AccessTokenModel> login(String email, {String password, bool facebookLogin = false, String avatar = ''}) {
+  Future<AccessTokenModel> login(String email, {String senha, bool facebookLogin = false, String avatar = ''}) {
     // login pelo facebook já implica em um cadastro automático
     // o avatar será a imagem do usuário, que pode vir do facebook
 
@@ -16,7 +17,7 @@ class UsuarioRepository {
     // fazendo login no backend
     return CustomDio.instance.post('/login', data: {
       'login': email,
-      'senha': password,
+      'senha': senha,
       'facebookLogin': facebookLogin,
       'avatar': avatar,
     }).then((res) => AccessTokenModel.fromJson(res.data));
@@ -34,5 +35,7 @@ class UsuarioRepository {
     }).then((res) => ConfirmLoginModel.fromJson(res.data));
   }
 
-  // vou deixar o serviço tratar os possíveis erros
+  Future<UsuarioModel> recuperaDadosUsuarioLogado() {
+    return CustomDio.authInstance.get('/usuario').then((res) => UsuarioModel.fromJson(res.data));
+  }
 }
