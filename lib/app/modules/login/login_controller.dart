@@ -1,7 +1,8 @@
 import 'package:cuidapet_fabreder/app/core/exceptions/cuidapet_exceptions.dart';
-import 'package:cuidapet_fabreder/app/services/usuario_services.dart';
+import 'package:cuidapet_fabreder/app/services/usuario_service.dart';
 import 'package:cuidapet_fabreder/app/shared/components/loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mobx/mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -12,7 +13,7 @@ part 'login_controller.g.dart';
 class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
-  final UsuarioServices _service;
+  final UsuarioService _service;
 
   GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController loginController = TextEditingController();
@@ -58,6 +59,8 @@ abstract class _LoginControllerBase with Store {
       Loader.hide();
       print(e);
       Get.snackbar('Erro', 'Login ou senha inválidos');
+    } on PlatformException catch (e) {
+      print('ERRRRROOOOOO $e');
     } catch (e) {
       Loader.hide();
       print('Erro: $e');

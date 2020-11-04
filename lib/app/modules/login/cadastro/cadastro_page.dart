@@ -1,33 +1,28 @@
-import 'dart:io';
-
-import 'package:cuidapet_fabreder/app/core/database/connection.dart';
-import 'package:cuidapet_fabreder/app/shared/components/facebook_button.dart';
 import 'package:cuidapet_fabreder/app/shared/theme_utils.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'login_controller.dart';
+import 'cadastro_controller.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+class CadastroPage extends StatefulWidget {
+  const CadastroPage({Key key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _CadastroPageState createState() => _CadastroPageState();
 }
 
-class _LoginPageState extends ModularState<LoginPage, LoginController> {
+class _CadastroPageState extends ModularState<CadastroPage, CadastroController> {
   //use 'controller' variable to access controller
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Cadastrar Usuário'),
+        backgroundColor: Colors.white,
+        elevation: 0,
+      ),
       backgroundColor: ThemeUtils.primaryColor,
       body: SingleChildScrollView(
         child: Container(
@@ -50,7 +45,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
               // logo
               Container(
                 // descontando o tamanho da status bar
-                margin: EdgeInsets.only(top: Platform.isIOS ? ScreenUtil().statusBarHeight + 30 : ScreenUtil().statusBarHeight),
                 width: double.infinity,
                 child: Column(
                   children: [
@@ -91,6 +85,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
               validator: (value) {
                 if (value.trim().isEmpty) {
                   return 'Login obrigatório';
+                } else if (!value.contains('@')) {
+                  return 'Login precisa ser um email';
                 }
                 return null;
               },
@@ -125,6 +121,40 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                 },
               );
             }),
+            SizedBox(
+              height: 20,
+            ),
+
+            // confirmar senha...
+            Observer(builder: (_) {
+              return TextFormField(
+                controller: controller.confirmaSenhaController,
+                obscureText: controller.ocultaConfirmaSenha,
+                decoration: InputDecoration(
+                  labelText: 'Confirma Senha',
+                  labelStyle: TextStyle(fontSize: 15),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(50),
+                    gapPadding: 0, // estaço na borda
+                  ),
+                  suffixIcon: IconButton(
+                    icon: controller.ocultaConfirmaSenha ? Icon(Icons.lock) : Icon(Icons.lock_open),
+                    onPressed: () => controller.toggleOcultaConfirmaSenha(),
+                  ),
+                ),
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Confirma senha obrigatória';
+                  } else if (value.length < 6) {
+                    return 'Confirma senha precisa ter pelo menos 6 caracteres';
+                  } else if (value != controller.senhaController.text) {
+                    return 'Senha e confirma senha não são iguais';
+                  }
+                  return null;
+                },
+              );
+            }),
+
             // botão entrar... pra esticar preciso usá-lo em um container
             Container(
               width: double.infinity,
@@ -137,52 +167,14 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
-                  'Entrar',
+                  'Cadastrar',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 20,
                   ),
                 ),
-                onPressed: controller.login,
+                onPressed: controller.cadastrarUsuario,
               ),
-            ),
-            // separador...
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Divider(
-                      color: ThemeUtils.primaryColor,
-                      thickness: 1,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      'ou',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: ThemeUtils.primaryColor,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: ThemeUtils.primaryColor,
-                      thickness: 1,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            FacebookButton(onTap: () => controller.facebookLogin()),
-            FlatButton(
-              // onPressed: () => Modular.link.pushNamed('/cadastro'),
-              onPressed: () => Modular.to.pushNamed('/login/cadastro'),
-              child: Text('Cadastre-se'),
             ),
           ],
         ),

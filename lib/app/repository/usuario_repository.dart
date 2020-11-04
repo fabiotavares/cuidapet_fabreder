@@ -38,4 +38,11 @@ class UsuarioRepository {
   Future<UsuarioModel> recuperaDadosUsuarioLogado() {
     return CustomDio.authInstance.get('/usuario').then((res) => UsuarioModel.fromJson(res.data));
   }
+
+  Future<void> cadastrarUsuario(String email, String senha) async {
+    await CustomDio.instance.post('/login/cadastrar', data: {
+      'email': email,
+      'senha': senha,
+    });
+  }
 }

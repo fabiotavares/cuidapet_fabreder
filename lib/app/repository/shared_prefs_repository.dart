@@ -2,6 +2,8 @@
 import 'dart:convert';
 
 import 'package:cuidapet_fabreder/app/models/usuario_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // singleton
@@ -46,5 +48,11 @@ class SharedPrefsRepository {
       return UsuarioModel.fromJson(usuarioMapa);
     }
     return null;
+  }
+
+  void logout() {
+    prefs.clear();
+    // redireciona para a home
+    Modular.to.pushNamedAndRemoveUntil('/', ModalRoute.withName('/')); // até que chegue na barra
   }
 }

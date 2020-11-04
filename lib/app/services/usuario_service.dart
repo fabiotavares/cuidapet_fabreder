@@ -9,10 +9,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class UsuarioServices {
+class UsuarioService {
   final UsuarioRepository _repository;
 
-  UsuarioServices(this._repository);
+  UsuarioService(this._repository);
 
   Future<void> login({
     @required bool facebookLogin,
@@ -61,19 +61,30 @@ class UsuarioServices {
       // erro específico do firebase
       // repassando a excessão, pois é a controller que informará na tela
       print('Erro ao fazer login no Firebase $e');
+      print('erro #01');
       rethrow;
     } on DioError catch (e) {
       // erro específico do Dio
+      print('erro #02');
       if (e.response.statusCode == 403) {
         // envia exceção customizada
         throw AcessoNegadoException(e.response.data['message'], exception: e);
       } else {
+        print('erro #03');
         rethrow;
       }
     } catch (e) {
       // repassando a excessão, pois é a controller que informará na tela
       print('Erro ao fazer login $e');
+      print('erro #04');
       rethrow;
     }
+  }
+
+  Future<void> cadastrarUsuario(String email, String senha) async {
+    await _repository.cadastrarUsuario(email, senha);
+    // cadastrar no firebase
+    var fireAuth = FirebaseAuth.instance;
+    await fireAuth.createUserWithEmailAndPassword(email: email, password: senha);
   }
 }
