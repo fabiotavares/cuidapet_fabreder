@@ -1,6 +1,7 @@
 // usando o plugin Shered Preferences para armazenar dados não criptografados
 import 'dart:convert';
 
+import 'package:cuidapet_fabreder/app/models/endereco_model.dart';
 import 'package:cuidapet_fabreder/app/models/usuario_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -11,6 +12,7 @@ class SharedPrefsRepository {
   static const _ACCESS_TOKEN = '/_ACCESS_TOKEN/';
   static const _DEVICE_ID = '/_DEVICE_ID/';
   static const _USER_DATA = '/_USER_DATA/';
+  static const _ENDERECO_SELECIONADO = '/_ENDERECO_SELECIONADO/';
 
   static SharedPreferences prefs;
   static SharedPrefsRepository _instanceRepository;
@@ -54,5 +56,18 @@ class SharedPrefsRepository {
     prefs.clear();
     // redireciona para a home
     Modular.to.pushNamedAndRemoveUntil('/', ModalRoute.withName('/')); // até que chegue na barra
+  }
+
+  Future<void> registerEnderecoSelecionado(EnderecoModel model) async {
+    await prefs.setString(_ENDERECO_SELECIONADO, model.toJson());
+  }
+
+  EnderecoModel get enderecoSelecionado {
+    final enderecoJson = prefs.getString(_ENDERECO_SELECIONADO);
+    if (enderecoJson != null) {
+      return EnderecoModel.fromJson(enderecoJson);
+    }
+
+    return null;
   }
 }

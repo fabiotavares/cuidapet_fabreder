@@ -93,5 +93,14 @@
 
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+
+	<key>io.flutter.embedded_views_preview</key>
+	<true/>
+
+	<!-- Configuração sobre localização - plugin geolocation -->
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Preciso da localização para buscar o seu endereço.</string>
+	<!-- <key>NSLocationAlwaysUsageDescription</key>
+	<string>Preciso da localização para buscar o seu endereço.</string> -->
 </dict>
 </plist>

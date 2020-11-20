@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cuidapet_fabreder/app/core/database/connection.dart';
 import 'package:cuidapet_fabreder/app/shared/components/facebook_button.dart';
 import 'package:cuidapet_fabreder/app/shared/theme_utils.dart';
 
