@@ -27,7 +27,7 @@ class EnderecoService {
     return _repository.buscarEnderecos();
   }
 
-  Future<PlacesDetailsResponse> bucsarDetalheEnderecoGooglePlaces(String placeId) {
+  Future<PlacesDetailsResponse> buscarDetalheEnderecoGooglePlaces(String placeId) {
     return _repository.recuperaDetalhesEnderecoGooglePlaces(placeId);
   }
 }

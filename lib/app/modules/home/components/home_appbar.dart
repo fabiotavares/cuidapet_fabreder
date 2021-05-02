@@ -1,6 +1,8 @@
 import 'package:cuidapet_fabreder/app/modules/home/home_controller.dart';
+import 'package:cuidapet_fabreder/app/repository/shared_prefs_repository.dart';
 import 'package:cuidapet_fabreder/app/shared/theme_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,6 +20,14 @@ class HomeAppBar extends PreferredSize {
               ),
               actions: [
                 IconButton(
+                  icon: Icon(Icons.logout),
+                  onPressed: () async {
+                    // temp: fazer logout
+                    final prefs = await SharedPrefsRepository.instance;
+                    prefs.logout();
+                  },
+                ),
+                IconButton(
                   icon: Icon(Icons.location_on),
                   // onPressed: () => Modular.link.pushNamed('/enderecos'),
                   onPressed: () async {
@@ -25,7 +35,7 @@ class HomeAppBar extends PreferredSize {
                     // atualizar a home...
                     await controller.recuperarEnderecoSelecionado();
                     // atualiza lista de estabelecimentos...
-                    controller.buscarEstabelecimentos();
+                    await controller.buscarEstabelecimentos();
                   },
                 ),
               ],
@@ -48,29 +58,33 @@ class HomeAppBar extends PreferredSize {
                         // material pra colocar um elevation no campo de pesqusia
                         elevation: 4,
                         borderRadius: BorderRadius.circular(30),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            // fillColor e filled precisam ser configurados em conjunto
-                            fillColor: Colors.white,
-                            filled: true,
-                            suffixIcon: Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: Icon(Icons.search, size: 30),
+                        child: Observer(builder: (_) {
+                          return TextFormField(
+                            onChanged: (value) => controller.filtrarEstabelecimentosPorNome(),
+                            controller: controller.filtroNomeController,
+                            decoration: InputDecoration(
+                              // fillColor e filled precisam ser configurados em conjunto
+                              fillColor: Colors.white,
+                              filled: true,
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Icon(Icons.search, size: 30),
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.grey[200]),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.grey[200]),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                borderSide: BorderSide(color: Colors.grey[200]),
+                              ),
                             ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(color: Colors.grey[200]),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(color: Colors.grey[200]),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30),
-                              borderSide: BorderSide(color: Colors.grey[200]),
-                            ),
-                          ),
-                        ),
+                          );
+                        }),
                       ),
                     ),
                   ),

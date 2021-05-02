@@ -26,4 +26,8 @@ Future<void> loadEnv() async {
   // modo de saber se o app tá rodando em modo release
   const isProduction = bool.fromEnvironment('dart.vm.product');
   await DotEnv().load(isProduction ? '.env' : '.env_dev');
+  // importante: base_url conforme a plataforma (rondando local)
+  // Emulador iOS: http://localhost:8888 (ou http://127.0.0.1:8888)
+  // Emulador Android: http://10.2.0.1:8888
+  // Aparelho físico: endereço da máquina (no mac: http://192.168.31.168:8888)
 }

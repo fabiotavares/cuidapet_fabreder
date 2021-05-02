@@ -34,7 +34,7 @@ abstract class _EnderecosControllerBase with Store {
   Future<void> enviarDetalhe(Prediction pred) async {
     if (pred != null) {
       Loader.show();
-      final resultado = await _enderecoService.bucsarDetalheEnderecoGooglePlaces(pred.placeId);
+      final resultado = await _enderecoService.buscarDetalheEnderecoGooglePlaces(pred.placeId);
       final detalhe = resultado.result;
       var enderecoModel = EnderecoModel(
         id: null,
@@ -45,7 +45,8 @@ abstract class _EnderecosControllerBase with Store {
       );
       Loader.hide();
       // chamar a tela de detalhes ESPERANDO seu retorno (mesmo endereço retornado para edição (possivelmente))...
-      var enderecoEdicao = await Modular.to.pushNamed('/home/enderecos/detalhe', arguments: enderecoModel) as EnderecoModel;
+      var enderecoEdicao =
+          await Modular.to.pushNamed('/home/enderecos/detalhe', arguments: enderecoModel) as EnderecoModel;
       verificaEdicaoEndereco(enderecoEdicao);
     }
   }
@@ -54,7 +55,8 @@ abstract class _EnderecosControllerBase with Store {
   Future<void> minhaLocalizacao() async {
     Loader.show();
     Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude, localeIdentifier: 'pt_BR');
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude, localeIdentifier: 'pt_BR');
 
     if (placemarks != null && placemarks.length > 0) {
       var place = placemarks[0];
@@ -67,7 +69,8 @@ abstract class _EnderecosControllerBase with Store {
       );
       Loader.hide();
       // chamar a tela de detalhes ESPERANDO seu retorno aqui...
-      var enderecoEdicao = await Modular.to.pushNamed('/home/enderecos/detalhe', arguments: enderecoModel) as EnderecoModel;
+      var enderecoEdicao =
+          await Modular.to.pushNamed('/home/enderecos/detalhe', arguments: enderecoModel) as EnderecoModel;
       verificaEdicaoEndereco(enderecoEdicao);
     } else {
       Loader.hide();

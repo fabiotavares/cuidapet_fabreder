@@ -20,19 +20,19 @@ final $HomeController = BindInject(
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$HomeController on _HomeControllerBase, Store {
-  final _$endereceSelecionadoAtom =
-      Atom(name: '_HomeControllerBase.endereceSelecionado');
+  final _$enderecoSelecionadoAtom =
+      Atom(name: '_HomeControllerBase.enderecoSelecionado');
 
   @override
-  EnderecoModel get endereceSelecionado {
-    _$endereceSelecionadoAtom.reportRead();
-    return super.endereceSelecionado;
+  EnderecoModel get enderecoSelecionado {
+    _$enderecoSelecionadoAtom.reportRead();
+    return super.enderecoSelecionado;
   }
 
   @override
-  set endereceSelecionado(EnderecoModel value) {
-    _$endereceSelecionadoAtom.reportWrite(value, super.endereceSelecionado, () {
-      super.endereceSelecionado = value;
+  set enderecoSelecionado(EnderecoModel value) {
+    _$enderecoSelecionadoAtom.reportWrite(value, super.enderecoSelecionado, () {
+      super.enderecoSelecionado = value;
     });
   }
 
@@ -67,6 +67,23 @@ mixin _$HomeController on _HomeControllerBase, Store {
     _$estabelecimentosFutureAtom
         .reportWrite(value, super.estabelecimentosFuture, () {
       super.estabelecimentosFuture = value;
+    });
+  }
+
+  final _$categoriaSelecionadaAtom =
+      Atom(name: '_HomeControllerBase.categoriaSelecionada');
+
+  @override
+  int get categoriaSelecionada {
+    _$categoriaSelecionadaAtom.reportRead();
+    return super.categoriaSelecionada;
+  }
+
+  @override
+  set categoriaSelecionada(int value) {
+    _$categoriaSelecionadaAtom.reportWrite(value, super.categoriaSelecionada,
+        () {
+      super.categoriaSelecionada = value;
     });
   }
 
@@ -111,6 +128,15 @@ mixin _$HomeController on _HomeControllerBase, Store {
         .run(() => super.temEnderecoCadastrado());
   }
 
+  final _$buscarEstabelecimentosAsyncAction =
+      AsyncAction('_HomeControllerBase.buscarEstabelecimentos');
+
+  @override
+  Future<void> buscarEstabelecimentos() {
+    return _$buscarEstabelecimentosAsyncAction
+        .run(() => super.buscarEstabelecimentos());
+  }
+
   final _$_HomeControllerBaseActionController =
       ActionController(name: '_HomeControllerBase');
 
@@ -137,11 +163,33 @@ mixin _$HomeController on _HomeControllerBase, Store {
   }
 
   @override
-  void buscarEstabelecimentos() {
+  void filtrarEstabelecimentosPorCategora(int id) {
     final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
-        name: '_HomeControllerBase.buscarEstabelecimentos');
+        name: '_HomeControllerBase.filtrarEstabelecimentosPorCategora');
     try {
-      return super.buscarEstabelecimentos();
+      return super.filtrarEstabelecimentosPorCategora(id);
+    } finally {
+      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void filtrarEstabelecimentosPorNome() {
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase.filtrarEstabelecimentosPorNome');
+    try {
+      return super.filtrarEstabelecimentosPorNome();
+    } finally {
+      _$_HomeControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void _filtrarEstabelecimentos() {
+    final _$actionInfo = _$_HomeControllerBaseActionController.startAction(
+        name: '_HomeControllerBase._filtrarEstabelecimentos');
+    try {
+      return super._filtrarEstabelecimentos();
     } finally {
       _$_HomeControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -150,9 +198,10 @@ mixin _$HomeController on _HomeControllerBase, Store {
   @override
   String toString() {
     return '''
-endereceSelecionado: ${endereceSelecionado},
+enderecoSelecionado: ${enderecoSelecionado},
 categoriasFuture: ${categoriasFuture},
 estabelecimentosFuture: ${estabelecimentosFuture},
+categoriaSelecionada: ${categoriaSelecionada},
 pageSelecionada: ${pageSelecionada}
     ''';
   }

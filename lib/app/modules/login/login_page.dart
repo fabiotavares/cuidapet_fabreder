@@ -49,7 +49,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
               // logo
               Container(
                 // descontando o tamanho da status bar
-                margin: EdgeInsets.only(top: Platform.isIOS ? ScreenUtil().statusBarHeight + 30 : ScreenUtil().statusBarHeight),
+                margin: EdgeInsets.only(
+                    top: Platform.isIOS ? ScreenUtil().statusBarHeight + 30 : ScreenUtil().statusBarHeight),
                 width: double.infinity,
                 child: Column(
                   children: [

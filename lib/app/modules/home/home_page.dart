@@ -46,23 +46,28 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       drawer: Drawer(),
       backgroundColor: Colors.grey[100],
       appBar: myAppBar,
-      body: SingleChildScrollView(
-        // após incluir o singlechildscrollview, coloquei o container envolvendo a column
-        child: Container(
-          padding: EdgeInsets.only(top: 20),
-          width: ScreenUtil().screenWidth,
-          // muita atenção nesse desconto pra altura da tela ficar certinha
-          height: ScreenUtil().screenHeight - (myAppBar.preferredSize.height + ScreenUtil().statusBarHeight),
-          child: Column(
-            children: <Widget>[
-              // endereço corrente...
-              _buildEndereco(),
-              SizedBox(height: 10),
-              // lista de categorias...
-              _buildCategorias(),
-              // lista de estabelecimentos localizados
-              Expanded(child: _buildEstabelecimentos()),
-            ],
+      body: RefreshIndicator(
+        onRefresh: () => controller.buscarEstabelecimentos(),
+        child: SingleChildScrollView(
+          // necessário para permitir a rolagem pro refreshIndicator, mesmo que não tenha extrapolado o tamanho da tela
+          physics: AlwaysScrollableScrollPhysics(),
+          // após incluir o singlechildscrollview, coloquei o container envolvendo a column
+          child: Container(
+            padding: EdgeInsets.only(top: 20),
+            width: ScreenUtil().screenWidth,
+            // muita atenção nesse desconto pra altura da tela ficar certinha
+            height: ScreenUtil().screenHeight - (myAppBar.preferredSize.height + ScreenUtil().statusBarHeight),
+            child: Column(
+              children: <Widget>[
+                // endereço corrente...
+                _buildEndereco(),
+                SizedBox(height: 10),
+                // lista de categorias...
+                _buildCategorias(),
+                // lista de estabelecimentos localizados
+                Expanded(child: _buildEstabelecimentos()),
+              ],
+            ),
           ),
         ),
       ),
@@ -79,7 +84,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           Observer(builder: (_) {
             return Text(
               //se não for nula pega o atributo, senão coloca vazio
-              controller.endereceSelecionado?.endereco ?? '',
+              controller.enderecoSelecionado?.endereco ?? '',
               textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.bold),
             );
@@ -127,19 +132,24 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                     itemBuilder: (context, index) {
                       var cat = cats[index];
                       // construção do circulo com icone e desenho embaixo
-                      return Container(
-                        margin: EdgeInsets.all(20),
-                        child: Column(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: ThemeUtils.primaryColorLight,
-                              child: Icon(categoriasIcons[cat.tipo], size: 30, color: Colors.black),
-                              // tamanho do avatar:
-                              radius: 30,
-                            ),
-                            SizedBox(height: 10),
-                            Text(cat.nome),
-                          ],
+                      return InkWell(
+                        onTap: () => controller.filtrarEstabelecimentosPorCategora(cat.id),
+                        child: Container(
+                          margin: EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              Observer(builder: (_) {
+                                return CircleAvatar(
+                                  backgroundColor: controller.categoriaSelecionada == cat.id ? ThemeUtils.primaryColor : ThemeUtils.primaryColorLight,
+                                  child: Icon(categoriasIcons[cat.tipo], size: 30, color: Colors.black),
+                                  // tamanho do avatar:
+                                  radius: 30,
+                                );
+                              }),
+                              SizedBox(height: 10),
+                              Text(cat.nome),
+                            ],
+                          ),
                         ),
                       );
                     },
